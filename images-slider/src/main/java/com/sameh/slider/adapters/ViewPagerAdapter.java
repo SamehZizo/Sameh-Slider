@@ -18,6 +18,7 @@ public class ViewPagerAdapter extends PagerAdapter {
     private Integer [] images;
     private String [] stringImages;
     private ArrayList<String> arrayList;
+    private ImageView imageView;
 
     public ViewPagerAdapter(Context context , String [] stringImages){
         this.context = context;
@@ -69,7 +70,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.custem_view_pager, null);
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+        imageView = (ImageView) view.findViewById(R.id.imageView);
 
         if (!stringImages[0].equals("no_data")){
             Glide.with(context).load(stringImages[position]).into(imageView);
@@ -94,5 +95,9 @@ public class ViewPagerAdapter extends PagerAdapter {
         View view = (View) object;
         vp.removeView(view);
 
+    }
+
+    public void changeScaleType(ImageView.ScaleType scaleType){
+        imageView.setScaleType(scaleType);
     }
 }
