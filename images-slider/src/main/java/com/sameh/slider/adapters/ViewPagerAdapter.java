@@ -18,7 +18,7 @@ public class ViewPagerAdapter extends PagerAdapter {
     private Integer [] images;
     private String [] stringImages;
     private ArrayList<String> arrayList;
-    private ImageView imageView;
+    private ImageView.ScaleType scaleType;
 
     public ViewPagerAdapter(Context context , String [] stringImages){
         this.context = context;
@@ -27,6 +27,17 @@ public class ViewPagerAdapter extends PagerAdapter {
         this.images[0] = 0;
         this.arrayList = new ArrayList<>();
         this.arrayList.add("no_data");
+        this.scaleType = null;
+    }
+
+    public ViewPagerAdapter(Context context , String [] stringImages, ImageView.ScaleType scaleType){
+        this.context = context;
+        this.stringImages = stringImages;
+        this.images = new Integer[1];
+        this.images[0] = 0;
+        this.arrayList = new ArrayList<>();
+        this.arrayList.add("no_data");
+        this.scaleType = scaleType;
     }
 
     public ViewPagerAdapter(Context context,ArrayList<String> arrayList){
@@ -36,6 +47,17 @@ public class ViewPagerAdapter extends PagerAdapter {
         this.stringImages[0] = "no_data";
         this.images = new Integer[1];
         this.images[0] = 0;
+        this.scaleType = null;
+    }
+
+    public ViewPagerAdapter(Context context, ArrayList<String> arrayList, ImageView.ScaleType scaleType){
+        this.context = context;
+        this.arrayList = arrayList;
+        this.stringImages = new String[1];
+        this.stringImages[0] = "no_data";
+        this.images = new Integer[1];
+        this.images[0] = 0;
+        this.scaleType = scaleType;
     }
 
     public ViewPagerAdapter(Context context,Integer [] images) {
@@ -45,6 +67,17 @@ public class ViewPagerAdapter extends PagerAdapter {
         this.stringImages[0] = "no_data";
         this.arrayList = new ArrayList<>();
         this.arrayList.add("no_data");
+        this.scaleType = null;
+    }
+
+    public ViewPagerAdapter(Context context, Integer [] images, ImageView.ScaleType scaleType) {
+        this.context = context;
+        this.images = images;
+        this.stringImages = new String[1];
+        this.stringImages[0] = "no_data";
+        this.arrayList = new ArrayList<>();
+        this.arrayList.add("no_data");
+        this.scaleType = scaleType;
     }
 
     @Override
@@ -70,7 +103,10 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.custem_view_pager, null);
-        imageView = (ImageView) view.findViewById(R.id.imageView);
+        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+        if (scaleType != null){
+            imageView.setScaleType(scaleType);
+        }
 
         if (!stringImages[0].equals("no_data")){
             Glide.with(context).load(stringImages[position]).into(imageView);
@@ -95,9 +131,5 @@ public class ViewPagerAdapter extends PagerAdapter {
         View view = (View) object;
         vp.removeView(view);
 
-    }
-
-    public void changeScaleType(ImageView.ScaleType scaleType){
-        imageView.setScaleType(scaleType);
     }
 }
